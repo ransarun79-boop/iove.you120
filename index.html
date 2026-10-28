@@ -1,0 +1,400 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You Very Much! ❤️</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti Library for Celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+     
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastelPink: '#FFF0F3',
+                        softRose: '#FFB3C1',
+                        accentRed: '#FF4D6D',
+                        deepRose: '#C9184A',
+                        sweetCream: '#FFF9FB'
+                    },
+                    fontFamily: {
+                        pacifico: ['"Pacifico"', 'cursive'],
+                        dancing: ['"Dancing Script"', 'cursive'],
+                        fredoka: ['"Fredoka"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #fff0f3 0%, #ffccd5 50%, #ffb3c1 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Floating background hearts */
+        .heart-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 8s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 0;
+            }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% {
+                transform: translateY(-10vh) scale(1.2) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Cat kissing animation effects */
+        .cat-tail {
+            transform-origin: bottom center;
+            animation: wagTail 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes wagTail {
+            0% { transform: rotate(-8deg); }
+            100% { transform: rotate(12deg); }
+        }
+
+        .cat-head-left {
+            transform-origin: bottom right;
+            animation: nuzzleLeft 2s ease-in-out infinite alternate;
+        }
+
+        .cat-head-right {
+            transform-origin: bottom left;
+            animation: nuzzleRight 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes nuzzleLeft {
+            0% { transform: rotate(0deg) translateX(0); }
+            100% { transform: rotate(4deg) translateX(5px); }
+        }
+
+        @keyframes nuzzleRight {
+            0% { transform: rotate(0deg) translateX(0); }
+            100% { transform: rotate(-4deg) translateX(-5px); }
+        }
+
+        .floating-kiss-heart {
+            animation: kissHeart 1.8s ease-out infinite;
+        }
+
+        @keyframes kissHeart {
+            0% {
+                transform: scale(0.3) translateY(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2) translateY(-25px);
+            }
+            100% {
+                transform: scale(1) translateY(-50px);
+                opacity: 0;
+            }
+        }
+
+        /* Glowing button effect */
+        .btn-glow {
+            box-shadow: 0 0 25px rgba(255, 77, 109, 0.5);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Modal popup scale-in animation */
+        .modal-pop {
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between items-center p-4 md:p-8 select-none">
+
+    <!-- Floating Background Hearts Container -->
+    <div id="heartParticles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Top Romantic Title Banner -->
+    <header class="relative z-10 text-center mt-2 md:mt-6 space-y-2">
+        <h1 class="font-pacifico text-4xl sm:text-5xl md:text-6xl text-deepRose drop-shadow-md tracking-wide">
+            I LOVE YOU VERY MUCH O chiiii ❤️
+        </h1>
+        <p class="font-dancing text-2xl sm:text-3xl text-accentRed font-bold">
+            You are my sweetest dream come true, my angel... ✨
+        </p>
+    </header>
+
+    <!-- Main Content Container: Kissing Cats Background & Interactive Card -->
+    <main class="relative z-10 my-auto w-full max-w-xl flex flex-col items-center">
+        
+        <!-- Animated Kissing Cats SVG Illustration -->
+        <div class="relative w-full max-w-xs sm:max-w-sm h-48 sm:h-56 flex items-center justify-center">
+            
+            <!-- Animated Kiss Hearts generated above cats -->
+            <div class="absolute -top-2 flex gap-3 text-2xl text-accentRed">
+                <i class="fa-solid fa-heart floating-kiss-heart" style="animation-delay: 0s;"></i>
+                <i class="fa-solid fa-heart floating-kiss-heart" style="animation-delay: 0.6s;"></i>
+                <i class="fa-solid fa-heart floating-kiss-heart" style="animation-delay: 1.2s;"></i>
+            </div>
+
+            <!-- SVG Cuties -->
+            <svg class="w-full h-full filter drop-shadow-lg" viewBox="0 0 400 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Shadow beneath cats -->
+                <ellipse cx="200" cy="215" rx="140" ry="12" fill="rgba(201, 24, 74, 0.15)" />
+
+                <!-- Left White/Cream Cat -->
+                <g id="leftCat">
+                    <!-- Tail -->
+                    <path class="cat-tail" d="M 110 185 C 80 180 60 140 75 120 C 85 110 95 125 85 135 C 75 145 90 170 115 175 Z" fill="#FFF9FB" stroke="#FFB3C1" stroke-width="3"/>
+                    <!-- Body -->
+                    <path d="M 110 210 Q 110 140 150 140 Q 190 140 185 210 Z" fill="#FFF9FB" stroke="#FFB3C1" stroke-width="3"/>
+                    <!-- Head Group -->
+                    <g class="cat-head-left">
+                        <ellipse cx="160" cy="115" rx="35" ry="30" fill="#FFF9FB" stroke="#FFB3C1" stroke-width="3"/>
+                        <!-- Ears -->
+                        <polygon points="135,95 130,65 152,87" fill="#FFF9FB" stroke="#FFB3C1" stroke-width="3"/>
+                        <polygon points="137,92 133,70 149,86" fill="#FFB3C1"/>
+                        <polygon points="168,87 185,65 182,95" fill="#FFF9FB" stroke="#FFB3C1" stroke-width="3"/>
+                        <polygon points="170,88 182,70 180,93" fill="#FFB3C1"/>
+                        <!-- Closed Happy Eyes -->
+                        <path d="M 140 115 Q 146 122 152 115" stroke="#C9184A" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <!-- Cute Blush -->
+                        <ellipse cx="140" cy="122" rx="6" ry="4" fill="#FF8FA3" opacity="0.8"/>
+                        <!-- Nose & Mouth -->
+                        <polygon points="158,118 162,118 160,121" fill="#FF4D6D"/>
+                    </g>
+                </g>
+
+                <!-- Right Peach/Orange Cat -->
+                <g id="rightCat">
+                    <!-- Tail -->
+                    <path class="cat-tail" d="M 290 185 C 320 180 340 140 325 120 C 315 110 305 125 315 135 C 325 145 310 170 285 175 Z" fill="#FFCAD4" stroke="#FF8FA3" stroke-width="3"/>
+                    <!-- Body -->
+                    <path d="M 290 210 Q 290 140 250 140 Q 210 140 215 210 Z" fill="#FFCAD4" stroke="#FF8FA3" stroke-width="3"/>
+                    <!-- Head Group -->
+                    <g class="cat-head-right">
+                        <ellipse cx="240" cy="115" rx="35" ry="30" fill="#FFCAD4" stroke="#FF8FA3" stroke-width="3"/>
+                        <!-- Ears -->
+                        <polygon points="232,87 215,65 218,95" fill="#FFCAD4" stroke="#FF8FA3" stroke-width="3"/>
+                        <polygon points="230,88 218,70 220,93" fill="#FF4D6D"/>
+                        <polygon points="265,95 270,65 248,87" fill="#FFCAD4" stroke="#FF8FA3" stroke-width="3"/>
+                        <polygon points="263,92 267,70 251,86" fill="#FF4D6D"/>
+                        <!-- Closed Happy Eyes -->
+                        <path d="M 248 115 Q 254 122 260 115" stroke="#C9184A" stroke-width="3" stroke-linecap="round" fill="none"/>
+                        <!-- Cute Blush -->
+                        <ellipse cx="260" cy="122" rx="6" ry="4" fill="#FF4D6D" opacity="0.8"/>
+                        <!-- Nose & Mouth -->
+                        <polygon points="238,118 242,118 240,121" fill="#C9184A"/>
+                    </g>
+                </g>
+
+                <!-- Kiss sparkle touching noses -->
+                <circle cx="200" cy="118" r="4" fill="#FF4D6D"/>
+                <path d="M 200 110 L 200 126 M 192 118 L 208 118" stroke="#FFF" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+
+        <!-- Sweet Interactive Question Card -->
+        <div class="w-full bg-white/80 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-xl border-2 border-white/60 text-center space-y-6 mt-2 relative overflow-hidden">
+            
+            <div class="space-y-2">
+                <span class="inline-block bg-pink-100 text-deepRose px-4 py-1 rounded-full text-xs font-bold tracking-wider uppercase">
+                    A Very Important Question 💌
+                </span>
+                <h2 id="questionHeading" class="text-2xl sm:text-3xl font-bold text-gray-800 leading-snug">
+                    Will you be my Valentine & love me forever?
+                </h2>
+                <p id="subQuestion" class="text-sm text-gray-500">
+                    Choose carefully... (There's only one right answer! 🐱💕)
+                </p>
+            </div>
+
+            <!-- Action Buttons Area -->
+            <div id="buttonArea" class="relative min-h-[120px] flex items-center justify-center gap-4 flex-wrap">
+                <!-- YES BUTTON -->
+                <button id="yesBtn" onclick="handleYesClick()" class="btn-glow bg-gradient-to-r from-accentRed to-deepRose hover:from-deepRose hover:to-accentRed text-white font-bold px-8 py-4 rounded-full text-lg shadow-lg transform hover:scale-110 active:scale-95 transition-all duration-300 flex items-center gap-2">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>YES! OF COURSE!</span>
+                </button>
+
+                <!-- NO BUTTON -->
+                <button id="noBtn" onmouseover="dodgeNoButton()" onclick="dodgeNoButton()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 py-3 rounded-full text-sm shadow transition-all duration-200">
+                    No 😢
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bottom Sweet Caption -->
+    <footer class="relative z-10 text-center my-4 text-xs sm:text-sm text-deepRose/80 font-medium">
+        Made with infinite love for my sweet kitten ❤️ 🐱
+    </footer>
+
+    <!-- Celebration Popup Modal (Hidden by default) -->
+    <div id="celebrationModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm hidden">
+        <div class="modal-pop bg-white rounded-3xl p-8 max-w-md w-full text-center space-y-6 shadow-2xl border-4 border-softRose relative overflow-hidden">
+            
+            <!-- Floating Decorative Stars -->
+            <div class="absolute -top-6 -right-6 w-20 h-20 bg-pink-100 rounded-full blur-xl pointer-events-none"></div>
+
+            <div class="text-5xl animate-bounce">
+                🐱❤️🐱
+            </div>
+
+            <div class="space-y-3">
+                <h3 class="font-pacifico text-3xl text-deepRose">
+                    I Knew It! 🎉
+                </h3>
+                <p class="text-gray-700 font-medium text-lg leading-relaxed">
+                    I love you so much my sweet angel! You just made me the happiest person in the entire universe! 💖✨
+                </p>
+            </div>
+
+            <div class="p-4 bg-pastelPink rounded-2xl border border-softRose/50 text-xs text-deepRose font-semibold space-y-1">
+                <p> Forever yours, forever together! 🥰</p>
+                <p>Let's celebrate with lots of cuddles and sweet kisses!</p>
+            </div>
+
+            <button onclick="closeModal()" class="w-full bg-gradient-to-r from-accentRed to-deepRose text-white font-bold py-3 rounded-full shadow-lg hover:brightness-110 transition-all">
+                Send You Big Hugs & Kisses 💋
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactive JavaScript Logic -->
+    <script>
+        let noCount = 0;
+        let yesScale = 1;
+        const noMessages = [
+            "No 😢",
+            "Are you sure? 🥺",
+            "Think again! 💔",
+            "Pretty please? 🌸",
+            "Don't be shy! 💕",
+            "You can't say no! 😜",
+            "Look at the kissing cats! 🐱",
+            "Just click YES! ❤️"
+        ];
+
+        // Generate floating background hearts
+        function initHearts() {
+            const container = document.getElementById('heartParticles');
+            const heartIcons = ['fa-heart', 'fa-paw', 'fa-sparkles', 'fa-heart'];
+            
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('i');
+                const randomIcon = heartIcons[Math.floor(Math.random() * heartIcons.length)];
+                heart.className = `fa-solid ${randomIcon} heart-particle text-accentRed`;
+                heart.style.left = `${Math.random() * 100}%`;
+                heart.style.animationDelay = `${Math.random() * 8}s`;
+                heart.style.animationDuration = `${6 + Math.random() * 6}s`;
+                heart.style.fontSize = `${12 + Math.random() * 20}px`;
+                container.appendChild(heart);
+            }
+        }
+
+        // Dodge / Shrink No Button & Grow Yes Button
+        function dodgeNoButton() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
+
+            noCount++;
+
+            // Update No Button text playfully
+            const messageIndex = Math.min(noCount, noMessages.length - 1);
+            noBtn.innerText = noMessages[messageIndex];
+
+            // Make Yes Button grow bigger each time
+            yesScale += 0.25;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Teleport or shrink No button to make it hard to click
+            if (noCount > 2) {
+                const buttonArea = document.getElementById('buttonArea');
+                const areaRect = buttonArea.getBoundingClientRect();
+                
+                // Calculate random offset within current view bounds
+                const randomX = (Math.random() - 0.5) * 200;
+                const randomY = (Math.random() - 0.5) * 80;
+
+                noBtn.style.position = 'relative';
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+                
+                // Slightly shrink No button
+                const noScale = Math.max(0.5, 1 - noCount * 0.08);
+                noBtn.style.transform = `scale(${noScale})`;
+            }
+        }
+
+        // Trigger Love Celebration on Yes
+        function handleYesClick() {
+            // Display Celebration Modal
+            document.getElementById('celebrationModal').classList.remove('hidden');
+
+            // Trigger Confetti Cannon Effect
+            const duration = 4 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 100 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                // Confetti from left and right
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+                    colors: ['#FF4D6D', '#FFB3C1', '#FFF0F3', '#C9184A']
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+                    colors: ['#FF4D6D', '#FFB3C1', '#FFF0F3', '#C9184A']
+                }));
+            }, 250);
+        }
+
+        function closeModal() {
+            document.getElementById('celebrationModal').classList.add('hidden');
+        }
+
+        // Initialize on DOM load
+        window.onload = function() {
+            initHearts();
+        };
+    </script>
+</body>
+</html>
